@@ -1,15 +1,5 @@
 -- cred: binninwl, salad and bery/4dsboy16
-getgenv().IS_CG_LOADED = false
-local oldr = request 
-getgenv().request = function(options)
-	if options.Headers then
-    options.Headers["User-Agent"] = "CG/RobloxApp/2.1"
-	else
-    options.Headers = {["User-Agent"] = "CG/RobloxApp/2.1"}
-	end
-	local response = oldr(options)
-	return response
-end 
+getgenv().IS_STELLAR_LOADED = false
 
 getgenv().getcallingscript = function()
     local src = debug.info(1, 's')
@@ -76,8 +66,8 @@ getgenv().fluxus = {
 --=============================END DEBUG LIB===============
 
 
---=============================CG LIB==================
-  getgenv().cg = {
+--=============================STELLAR LIB==================
+  getgenv().stellar = {
 	kick = function(msg)
  	   game.Players.LocalPlayer:Kick(msg)
 	end,
@@ -151,7 +141,7 @@ getgenv().IS_NYX_ENV = function(SECURE)
 end
 
 getgenv().getaffiliateid = newcclosure(function()
-    return "CG"
+    return "Stellar"
 end)
 
 getgenv().replicatesignal = newcclosure(function(signal, ...)
@@ -248,7 +238,7 @@ getgenv().getcallbackvalue = newcclosure(function(bindable, oninvoke)
 end)
 
 local function __send_to_C(message, text, description, type)
-    return "CG: Sent to bridge."
+    return "Stellar: Sent to bridge."
 end
 
 getgenv().messagebox = newcclosure(function(text, caption, _type)
@@ -277,7 +267,7 @@ getgenv().messagebox = newcclosure(function(text, caption, _type)
     exit
     ]], text, caption, _type)
 		
-    game:GetService("LinkingService"):OpenUrl(game:GetService("ScriptContext"):SaveScriptProfilingData(ps, "cg.messagebox.bat"))
+    game:GetService("LinkingService"):OpenUrl(game:GetService("ScriptContext"):SaveScriptProfilingData(ps, "stellar.messagebox.bat"))
 		
     getfenv().game = oldgame
 end)
@@ -380,7 +370,7 @@ getgenv().getscriptfunction = function(script)
         end
     else
         return function()
-            return nil, "CG: Script closure access is restricted."
+            return nil, "Stellar: Script closure access is restricted."
         end
     end
 end
@@ -550,7 +540,7 @@ getgenv().gamecrash = function()
 	while true do end
 end
 
-local __supported_functions_cg_x64_engine = {
+local __supported_functions_stellar_x64_engine = {
 	"request",
 	"newcclosure",
 	"getsupportedfunctions",
@@ -609,11 +599,11 @@ local __supported_functions_cg_x64_engine = {
     	"setsimulationradius",
 }
 
-local __unique_cg_functions_windows_x64_engine = {
+local __unique_stellar_functions_windows_x64_engine = {
 }
 
 getgenv().getexecutorname = function()
-	return "CG"
+	return "Stellar"
 end
 
 getgenv().getexecutorversion = function()
@@ -621,21 +611,21 @@ getgenv().getexecutorversion = function()
 end
 
 getgenv().identifyexecutor = function()
-	return "CG", "2.1"
+	return "Stellar", "2.1"
 end
 
 getgenv().whatexecutor = function()
-	return "CG"
+	return "Stellar"
 end
 
 -- Erm is this taaprware skidding
 
 getgenv().getsupportedfunctions = function()
-    return __supported_functions_cg_x64_engine
+    return __supported_functions_stellar_x64_engine
 end
 
 getgenv().getuniquefunctions = function()
-    return __unique_cg_functions_windows_x64_engine
+    return __unique_stellar_functions_windows_x64_engine
 end
 
 -- bery end
@@ -671,7 +661,7 @@ getgenv().require = function(scr) -- not mine
 	assert(type(scr) == "number" or (typeof(scr) == "Instance" and scr.ClassName == "ModuleScript"), "Expected")
 	if (type(scr) == "number") then 
     if not game:GetObjects('rbxassetid://' .. scr)[1] then 
-    	warn("CG: Require failed: invalid asset ID")
+    	warn("Stellar: Require failed: invalid asset ID")
     	return 
     end
     if typeof(game:GetObjects('rbxassetid://' .. scr)[1]) == "Instance" and game:GetObjects('rbxassetid://' .. scr)[1].ClassName == "ModuleScript" then
@@ -679,10 +669,10 @@ getgenv().require = function(scr) -- not mine
         if game:GetObjects('rbxassetid://' .. scr)[1].Source ~= "" then 
         	return loadstring(game:GetObjects('rbxassetid://' .. scr)[1].Source)()
         else 
-        	warn("CG: Require failed: cant require a modulescript with no code")
+        	warn("Stellar: Require failed: cant require a modulescript with no code")
         end
     	else 
-        warn("CG: Require failed: require asset id failed")
+        warn("Stellar: Require failed: require asset id failed")
     	end
     end
     return
@@ -843,9 +833,9 @@ end, function()
 end)
 
 check("getaffiliateid", function()
-    return "CG"
+    return "Stellar"
 end, function()
-    assert(getgenv().getaffiliateid() == "CG", "getaffiliateid function test failed")
+    assert(getgenv().getaffiliateid() == "Stellar", "getaffiliateid function test failed")
 end)
 
 check("getplayer", function(name: string)
@@ -1530,7 +1520,7 @@ function Bridge:InternalRequest(body, timeout)
     	return
     end
 
-    error("[CG Error]: Unknown error", 2)
+    error("[Stellar Error]: Unknown error", 2)
     return
 	end
 
@@ -1564,10 +1554,10 @@ function Bridge:InternalRequest(body, timeout)
 	end)
 
 	if success and result then
-    error("[CG Error]: " .. tostring(result), 2)
+    error("[Stellar Error]: " .. tostring(result), 2)
 	end
 
-	error("[CG Error]: Unknown server error", 2)
+	error("[Stellar Error]: Unknown server error", 2)
 end
 
 function Bridge:request(options)
@@ -1598,7 +1588,7 @@ function Bridge:request(options)
 	end
 	return {
     Success = false,
-    StatusMessage = "[CG Error]: webServer connection failed:  " .. self.serverUrl,
+    StatusMessage = "[Stellar Error]: webServer connection failed:  " .. self.serverUrl,
     StatusCode = 599;
     HttpError = Enum.HttpError.ConnectFail
 	}
@@ -1639,17 +1629,17 @@ if not shared.vulnsm then
 	end
 	getgenv().rconsoleclear = function()
     Bridge:rconsole("cls") 
-    rconsolesettitle("CG is NOT fat!")
+    rconsolesettitle("Stellar is NOT fat!")
 	end
 	
 	getgenv().rconsolecreate = function()
     Bridge:rconsole("crt")
-    rconsolesettitle("CG is NOT fat!")
+    rconsolesettitle("Stellar is NOT fat!")
 	end
 	
 	getgenv().rconsoledestroy = function()
     Bridge:rconsole("dst")
-    rconsolesettitle("CG is NOT fat!")
+    rconsolesettitle("Stellar is NOT fat!")
 	end
 	
 	getgenv().rconsoleprint = function(...)
@@ -1658,7 +1648,7 @@ if not shared.vulnsm then
     	text = text .. tostring(v) .. " "
     end
     Bridge:rconsole("prt", text)
-    rconsolesettitle("CG is NOT fat!")
+    rconsolesettitle("Stellar is NOT fat!")
 	end
 	
 	getgenv().rconsoleinfo = function(...)
@@ -1667,7 +1657,7 @@ if not shared.vulnsm then
     	text = text .. tostring(v) .. " "
     end
     Bridge:rconsole("prt", "[ INFO ] " .. text)
-    rconsolesettitle("CG is NOT fat!")
+    rconsolesettitle("Stellar is NOT fat!")
 	end
 	
 	getgenv().rconsolewarn = function(...)
@@ -1676,15 +1666,15 @@ if not shared.vulnsm then
     	text = text .. tostring(v) .. " "
     end
     Bridge:rconsole("prt", "[ WARNING ] " .. text)
-    rconsolesettitle("CG is NOT fat!")
+    rconsolesettitle("Stellar is NOT fat!")
 	end
 	getgenv().rconsoleinput = function(text)
     Bridge:rconsole("prt", "[ ERROR ] Input doesnt work")
-    rconsolesettitle("CG is NOT fat!")
+    rconsolesettitle("Stellar is NOT fat!")
 	end
 	getgenv().rconsoleerr = function(text)
     Bridge:rconsole("prt", "[ ERROR ] " .. text)
-    rconsolesettitle("CG is NOT fat!")
+    rconsolesettitle("Stellar is NOT fat!")
 	end 
 	getgenv().rconsoleerror = getgenv().rconsoleerr 
 	getgenv().rconsolename = getgenv().rconsolesettitle
@@ -2055,7 +2045,7 @@ if not shared.vulnsm then
     	meta.__index = function(s,k)
         if table.find(vulnFuncTbl, k) then 
         	return function()
-            error("[CG]: "..tostring(k).." isn't available.")
+            error("[Stellar]: "..tostring(k).." isn't available.")
         	end
         elseif k == "GetObjects" or k == "LoadLocalAsset" or k == "LoadAsset" then
         	return function(self, id)
@@ -2192,7 +2182,7 @@ WebSocket.connect = getgenv().WebSocket.connect
     	return oldlf(path)
     end 
 	end
-	print("[CG]: Vulns mitigated.")
+	print("[Stellar]: Vulns mitigated.")
 	shared.vulnsm = true 
 end 
 getgenv().getscripts = function() 
@@ -2257,24 +2247,24 @@ getgenv().getscriptclosure = function(module)
 end
 
 shared.notificationlibinject = true
-print("CG: Functions added.")
+print("Stellar: Functions added.")
 if not shared.notified and shared.notificationlibinject == false then 
 	game:GetService("StarterGui"):SetCore("SendNotification", {
-	    Title = "CG Injected",
-	    Text = "thanks bery/4dsboy16 for the funcs!",
+	    Title = "Stellar Injected",
+	    Text = "thanks bery/4dsboy16 for the funcs!\n discord.gg/XCpMgyA4R3",  -- xeno server: discord.gg/getxeno
 	    Duration = 3,
 	    Icon = "rbxassetid://127282870620926"  -- Default valid image to test
 	})
     shared.notified = true 
 else
     --local notificationlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/moonzybinninwl/apiShit/main/notificationlib.lua", true))()
-    --notificationlib.new("info", "CG", "CG has injected.")
+    --notificationlib.new("info", "Stellar", "Stellar has injected.")
     --local notificationlib_v2 = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/refs/heads/main/library.lua"))().Notify
-    --local notificationlib_v2 = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/d563e4db3a7130e66e35e7d7c4daed7583ee2862/library.lua"))().Notify
-    --notificationlib_v2({
-    --    Title="CG",
-    --    Description="CG has injected! You can join the discord from discord.gg/XCpMgyA4R3",
-    --    RBGShift=true,
-    --})
+    local notificationlib_v2 = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/d563e4db3a7130e66e35e7d7c4daed7583ee2862/library.lua"))().Notify
+    notificationlib_v2({
+        Title="Stellar",
+        Description="Stellar has injected! You can join the discord from discord.gg/XCpMgyA4R3",
+        RBGShift=true,
+    })
 end 
-getgenv().IS_CG_LOADED = true
+getgenv().IS_Stellar_LOADED = true
