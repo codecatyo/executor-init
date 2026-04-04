@@ -1,5 +1,15 @@
 -- cred: binninwl, salad and bery/4dsboy16
 getgenv().IS_STELLAR_LOADED = false
+local oldr = request 
+getgenv().request = function(options)
+	if options.Headers then
+    options.Headers["User-Agent"] = "Stellar/RobloxApp/2.1"
+	else
+    options.Headers = {["User-Agent"] = "Stellar/RobloxApp/2.1"}
+	end
+	local response = oldr(options)
+	return response
+end 
 
 getgenv().getcallingscript = function()
     local src = debug.info(1, 's')
